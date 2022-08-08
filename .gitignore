@@ -2,15 +2,5 @@
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+[Pp]roperties/
 .vs/
-/.vs
-/CommonService/obj
-/CommonService/bin
-/ContactService/bin
-/ContactService/logs
-/ContactService/obj
-/ContactService/Properties
-/EventService/bin
-/EventService/logs
-/EventService/obj
-/EventService/Properties
