@@ -1,3 +1,5 @@
+using FluentValidation.AspNetCore;
+
 WebApplicationExtensions.InitialiseLogger();
 
 try
@@ -6,6 +8,7 @@ try
     builder.AddSwagger();
     builder.AddServices();
     builder.AddLogging();
+    builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
     WebApplication app = builder.Build();
     app.UseSerilogRequestLogging();

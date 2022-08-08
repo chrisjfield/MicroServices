@@ -17,7 +17,8 @@ namespace CommonService
         {
             builder
                .DocumentBaseRequest(tag, name, description)
-               .Produces<T>(StatusCodes.Status201Created);
+               .Produces<T>(StatusCodes.Status201Created)
+               .Produces<ValidationErrors>(StatusCodes.Status400BadRequest);
         }
 
         public static void DocumentPutRequest<T>(this RouteHandlerBuilder builder, string tag, string name, string description)
@@ -25,6 +26,7 @@ namespace CommonService
             builder
                .DocumentBaseRequest(tag, name, description)
                .Produces<T>(StatusCodes.Status200OK)
+               .Produces<ValidationErrors>(StatusCodes.Status400BadRequest)
                .Produces(StatusCodes.Status404NotFound);
         }
 

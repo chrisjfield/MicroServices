@@ -14,7 +14,7 @@
                 .DocumentPostRequest<ContactRecord>("Contact", "PostContact", "Creates a contact");
 
             app.MapPut("/contact/{id}", PutContact)
-                .DocumentPostRequest<ContactRecord>("Contact", "PutContact", "Updates a contact");
+                .DocumentPutRequest<ContactRecord>("Contact", "PutContact", "Updates a contact");
             
             app.MapDelete("/contact/{id}", DeleteContact)
                 .DocumentDeleteRequest("Contact", "DeleteContact", "Deletes a contact");

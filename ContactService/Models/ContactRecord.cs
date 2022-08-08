@@ -1,4 +1,6 @@
-﻿namespace ContactService.Models
+﻿
+
+namespace ContactService.Models
 {
     [SwaggerSchemaFilter(typeof(SwaggerExample))]
     public record ContactRecord(
@@ -13,5 +15,13 @@
             ["Id"] = new OpenApiInteger(3),
             ["Name"] = new OpenApiString("An awesome product")
         };
+    }
+
+    public class ContactRecordValidator : AbstractValidator<ContactRecord>
+    {
+        public ContactRecordValidator()
+        {
+            RuleFor(c => c.Name).NotEmpty();
+        }
     }
 }

@@ -4,6 +4,7 @@ global using Microsoft.EntityFrameworkCore;
 global using Swashbuckle.AspNetCore.SwaggerGen;
 global using Swashbuckle.AspNetCore.Annotations;
 global using Serilog;
+global using FluentValidation;
 global using CommonService;
 global using ContactService.Models;
 global using ContactService.Services;
