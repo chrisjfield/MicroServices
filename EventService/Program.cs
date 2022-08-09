@@ -6,6 +6,7 @@ try
     builder.AddSwagger();
     builder.AddServices();
     builder.AddLogging();
+    builder.AddValidation<Program>();
 
     WebApplication app = builder.Build();
     app.UseSerilogRequestLogging();
