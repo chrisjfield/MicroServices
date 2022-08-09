@@ -6,8 +6,8 @@ namespace ContactService.Models
     public record ContactRecord(
         int Id,
         string Name,
-        string? Gender,
-        DateTime? DateOfBirth
+        string? Gender = null,
+        DateTime? DateOfBirth = null
     );
 
     public static class ContactRecordExample
