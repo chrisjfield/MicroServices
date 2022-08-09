@@ -29,6 +29,11 @@ namespace CommonService
             .ReadFrom.Configuration(ctx.Configuration));
         }
 
+        public static void AddValidation<T>(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddValidatorsFromAssemblyContaining<T>();
+        }
+
         public static void AddDocumentation(this WebApplication app)
         {
             app.UseSwagger();

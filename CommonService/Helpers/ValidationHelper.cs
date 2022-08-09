@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace CommonService
+﻿namespace CommonService
 {
     public static class ValidationHelper
     {
