@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContactService\ContactService.csproj" />
-    <ProjectReference Include="..\EventService\EventService.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContactService", "ContactSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonService", "CommonService\CommonService.csproj", "{C9AA9EE3-517C-483A-9E63-19E7C108E2F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventService", "EventService\EventService.csproj", "{0B11FAE3-1AE2-4E5D-BC7D-CEFABE24B6AA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8BC3F310-B201-4D29-956F-BFB13C2A8CED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8BC3F310-B201-4D29-956F-BFB13C2A8CED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{C9AA9EE3-517C-483A-9E63-19E7C108E2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9AA9EE3-517C-483A-9E63-19E7C108E2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9AA9EE3-517C-483A-9E63-19E7C108E2F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B11FAE3-1AE2-4E5D-BC7D-CEFABE24B6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B11FAE3-1AE2-4E5D-BC7D-CEFABE24B6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B11FAE3-1AE2-4E5D-BC7D-CEFABE24B6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B11FAE3-1AE2-4E5D-BC7D-CEFABE24B6AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BC3F310-B201-4D29-956F-BFB13C2A8CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BC3F310-B201-4D29-956F-BFB13C2A8CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BC3F310-B201-4D29-956F-BFB13C2A8CED}.Release|Any CPU.ActiveCfg = Release|Any CPU

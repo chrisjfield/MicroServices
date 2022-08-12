@@ -5,6 +5,8 @@ namespace CommonService
 {
     public static class WebApplicationExtensions
     {
+        public readonly static string AllowAllCorsPolicy = "AllowAll";
+
         public static void InitialiseLogger()
         {
             Log.Logger = new LoggerConfiguration()
@@ -31,7 +33,23 @@ namespace CommonService
 
         public static void AddValidation<T>(this WebApplicationBuilder builder)
         {
+            
             builder.Services.AddValidatorsFromAssemblyContaining<T>();
+        }
+
+        public static void AddCorsPolicies(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowAllCorsPolicy, builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    }
+                );
+            });
         }
 
         public static void AddDocumentation(this WebApplication app)
