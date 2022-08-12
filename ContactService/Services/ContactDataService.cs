@@ -4,16 +4,18 @@
     {
         private readonly ContactDb contactDb;
         private readonly IValidator<ContactRecord> validator;
+        private readonly ILogger<ContactDataService> logger;
 
-        public ContactDataService(ContactDb contactDb, IValidator<ContactRecord> validator)
+        public ContactDataService(ContactDb contactDb, IValidator<ContactRecord> validator, ILogger<ContactDataService> logger)
         {
             this.contactDb = contactDb;
             this.validator = validator;
+            this.logger = logger;
         }
 
         public async Task<IResult> GetAllContacts()
         {
-            throw new AppException("custom error");
+            logger.LogInformation("Service Logging - Information");
             List<ContactRecord> contacts = await contactDb.Contacts.ToListAsync();
             return Results.Ok(contacts);
         }
@@ -28,6 +30,8 @@
 
         public async Task<IResult> PostContact(ContactRecord contact)
         {
+            logger.LogInformation("posting contact {contact}", contact);
+
             ValidationErrors? modelValidation = validator.ValidateRecord(contact);
             if (modelValidation != null) { return Results.BadRequest(modelValidation); }
 

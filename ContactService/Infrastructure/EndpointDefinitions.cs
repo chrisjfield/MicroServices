@@ -5,7 +5,7 @@
         public static void AddEndpoints(this WebApplication app)
         {
             app.MapGet("/contact", GetAllContacts)
-                .DocumentGetRequest<List<ContactRecord>>("Contacts", "GetAllContacts", "Gets all the contacts"); ;
+                .DocumentGetRequest<List<ContactRecord>>("Contacts", "GetAllContacts", "Gets all the contacts");
 
             app.MapGet("/contact/{id}", GetContact)
                 .DocumentGetRequest<ContactRecord>("Contact", "GetContact", "Gets a contact");
@@ -20,7 +20,8 @@
                 .DocumentDeleteRequest("Contact", "DeleteContact", "Deletes a contact");
         }
 
-        internal static async Task<IResult> GetAllContacts(ContactDataService contactDataService) {
+        internal static async Task<IResult> GetAllContacts(ContactDataService contactDataService, ILogger<Program> logger) {
+            logger.LogInformation("Program logging - We will get all contacts");
             return await contactDataService.GetAllContacts();
         }
 

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using ContactService.Infrastructure;
 using ContactService.Services;
 using ContactService.Models;
@@ -12,6 +13,9 @@ namespace UnitTests
                 .UseInMemoryDatabase(databaseName: "ApplicationDb")
                 .Options;
 
+        private readonly ContactRecordValidator mockValidator = new();
+        private readonly NullLogger<ContactDataService> mockLogger = new();
+
         [TestMethod]
         public async Task GetAllContacts()
         {
@@ -25,7 +29,7 @@ namespace UnitTests
             context.Contacts.AddRange(contacts);
             context.SaveChanges();
           
-            ContactDataService contactDataService = new(context, new ContactRecordValidator());
+            ContactDataService contactDataService = new(context, mockValidator, mockLogger);
 
             IResult result = await contactDataService.GetAllContacts();
 
@@ -50,7 +54,7 @@ namespace UnitTests
             context.Contacts.AddRange(contacts);
             context.SaveChanges();
 
-            ContactDataService contactDataService = new(context, new ContactRecordValidator());
+            ContactDataService contactDataService = new(context, mockValidator, mockLogger);
 
             IResult result = await contactDataService.GetContact(1);
 
@@ -75,7 +79,7 @@ namespace UnitTests
             context.Contacts.AddRange(contacts);
             context.SaveChanges();
 
-            ContactDataService contactDataService = new(context, new ContactRecordValidator());
+            ContactDataService contactDataService = new(context, mockValidator, mockLogger);
 
             IResult result = await contactDataService.GetContact(3);
 
@@ -94,7 +98,7 @@ namespace UnitTests
 
             ContactDb context = new(options);
 
-            ContactDataService contactDataService = new(context, new ContactRecordValidator());
+            ContactDataService contactDataService = new(context, mockValidator, mockLogger);
 
             IResult result = await contactDataService.PostContact(contact);
 
@@ -113,7 +117,7 @@ namespace UnitTests
 
             ContactDb context = new(options);
 
-            ContactDataService contactDataService = new(context, new ContactRecordValidator());
+            ContactDataService contactDataService = new(context, mockValidator, mockLogger);
 
             IResult result = await contactDataService.PostContact(contact);
 
