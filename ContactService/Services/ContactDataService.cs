@@ -13,6 +13,7 @@
 
         public async Task<IResult> GetAllContacts()
         {
+            throw new AppException("custom error");
             List<ContactRecord> contacts = await contactDb.Contacts.ToListAsync();
             return Results.Ok(contacts);
         }

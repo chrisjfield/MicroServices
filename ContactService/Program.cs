@@ -12,6 +12,7 @@ try
     app.UseSerilogRequestLogging();
     app.AddDocumentation();
     app.UseHttpsRedirection();
+    app.RegisterMiddleware();
     app.AddEndpoints();
 
     app.Run();

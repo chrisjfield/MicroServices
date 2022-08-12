@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+using CommonService.Infrastructure;
 
 namespace CommonService
 {
@@ -39,5 +39,10 @@ namespace CommonService
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        public static void RegisterMiddleware(this WebApplication app)
+        {
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+        }        
     }
 }

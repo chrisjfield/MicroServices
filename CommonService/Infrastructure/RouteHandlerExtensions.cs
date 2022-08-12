@@ -1,5 +1,4 @@
 ﻿using Swashbuckle.AspNetCore.Annotations;
-using Microsoft.AspNetCore.Http;
 
 namespace CommonService
 {
