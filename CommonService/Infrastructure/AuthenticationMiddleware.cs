@@ -1,29 +1,28 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace CommonService.Infrastructure
+namespace CommonService.Infrastructure;
+
+public class AuthenticationMiddleware
 {
-    public class AuthenticationMiddleware
+    private readonly RequestDelegate _next;
+    private const string APIKEY = "X-ClientId";
+    private readonly ILogger<AuthenticationMiddleware> _logger;
+
+    public AuthenticationMiddleware(RequestDelegate next, ILoggerFactory _loggerFactory)
     {
-        private readonly RequestDelegate _next;
-        private const string APIKEY = "X-ClientId";
-        private readonly ILogger<AuthenticationMiddleware> _logger;
+        _next = next;
+        _logger = _loggerFactory.CreateLogger<AuthenticationMiddleware>(); ;
+    }
 
-        public AuthenticationMiddleware(RequestDelegate next, ILoggerFactory _loggerFactory)
+    public async Task Invoke(HttpContext context)
+    {
+        if (!context.Request.Headers.TryGetValue(APIKEY, out var extractedApiKey))
         {
-            _next = next;
-            _logger = _loggerFactory.CreateLogger<AuthenticationMiddleware>(); ;
+            _logger.LogInformation("No Api Key provided");
+            throw new UnauthorizedAccessException("Client Id was not provided");
         }
 
-        public async Task Invoke(HttpContext context)
-        {
-            if (!context.Request.Headers.TryGetValue(APIKEY, out var extractedApiKey))
-            {
-                _logger.LogInformation("No Api Key provided");
-                throw new UnauthorizedAccessException("Client Id was not provided");
-            }
 
-
-            await _next(context);
-        }
+        await _next(context);
     }
 }

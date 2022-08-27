@@ -1,4 +1,3 @@
-﻿namespace CommonService
-{
-    public record ValidationErrors(List<string> Errors);
-}
+﻿namespace CommonService;
+
+public record ValidationErrors(List<string> Errors);

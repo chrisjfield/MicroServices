@@ -1,8 +1,7 @@
-﻿namespace ContactService.Infrastructure
+﻿namespace ContactService.Infrastructure;
+
+public class ContactDb : DbContext
 {
-    public class ContactDb : DbContext
-    {
-        public ContactDb(DbContextOptions options) : base(options) { }
-        public DbSet<ContactRecord> Contacts { get; set; } = null!;
-    }
+    public ContactDb(DbContextOptions options) : base(options) { }
+    public DbSet<ContactRecord> Contacts { get; set; } = null!;
 }

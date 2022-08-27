@@ -1,16 +1,15 @@
 ﻿using System.Globalization;
 
-namespace CommonService.Infrastructure
+namespace CommonService.Infrastructure;
+
+public class AppException : Exception
 {
-    public class AppException : Exception
+    public AppException() : base() { }
+
+    public AppException(string message) : base(message) { }
+
+    public AppException(string message, params object[] args)
+        : base(string.Format(CultureInfo.CurrentCulture, message, args))
     {
-        public AppException() : base() { }
-
-        public AppException(string message) : base(message) { }
-
-        public AppException(string message, params object[] args)
-            : base(string.Format(CultureInfo.CurrentCulture, message, args))
-        {
-        }
     }
 }

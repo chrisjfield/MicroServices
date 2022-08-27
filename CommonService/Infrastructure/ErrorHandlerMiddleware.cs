@@ -2,42 +2,41 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
-namespace CommonService.Infrastructure
+namespace CommonService.Infrastructure;
+
+public class ErrorHandlerMiddleware
 {
-    public class ErrorHandlerMiddleware
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ErrorHandlerMiddleware> _logger;
+
+    public ErrorHandlerMiddleware(RequestDelegate next, ILoggerFactory _loggerFactory)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ErrorHandlerMiddleware> _logger;
+        _next = next;
+        _logger = _loggerFactory.CreateLogger<ErrorHandlerMiddleware>(); ;
+    }
 
-        public ErrorHandlerMiddleware(RequestDelegate next, ILoggerFactory _loggerFactory)
+    public async Task Invoke(HttpContext context)
+    {
+        try
         {
-            _next = next;
-            _logger = _loggerFactory.CreateLogger<ErrorHandlerMiddleware>(); ;
+            await _next(context);
         }
-
-        public async Task Invoke(HttpContext context)
+        catch (Exception error)
         {
-            try
-            {
-                await _next(context);
-            }
-            catch (Exception error)
-            {
-                _logger.LogError("Error in middleware");
-                HttpResponse response = context.Response;
-                response.ContentType = "application/json";
+            _logger.LogError("Error in middleware");
+            HttpResponse response = context.Response;
+            response.ContentType = "application/json";
 
-                response.StatusCode = error switch
-                {
-                    AppException => (int)HttpStatusCode.BadRequest,// custom application error
-                    UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized, //unauth error
-                    KeyNotFoundException => (int)HttpStatusCode.NotFound,// not found error
-                    _ => (int)HttpStatusCode.InternalServerError,// unhandled error
-                };
+            response.StatusCode = error switch
+            {
+                AppException => (int)HttpStatusCode.BadRequest,// custom application error
+                UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized, //unauth error
+                KeyNotFoundException => (int)HttpStatusCode.NotFound,// not found error
+                _ => (int)HttpStatusCode.InternalServerError,// unhandled error
+            };
 
-                var result = JsonSerializer.Serialize(new { message = error?.Message });
-                await response.WriteAsync(result);
-            }
+            var result = JsonSerializer.Serialize(new { message = error?.Message });
+            await response.WriteAsync(result);
         }
     }
 }
