@@ -1,4 +1,4 @@
-﻿namespace ContactService.Services
+﻿ namespace ContactService.Services
 {
     public class ContactDataService
     {

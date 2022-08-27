@@ -4,6 +4,7 @@ builder.AddServices();
 builder.AddCorsPolicies();
 builder.AddValidation<Program>();
 builder.AddRateLimiting();
+builder.OpenTelemetryInstrumenter();
 
 
 WebApplication app = builder.Build();
