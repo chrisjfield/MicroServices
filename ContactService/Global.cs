@@ -5,7 +5,6 @@ global using Swashbuckle.AspNetCore.SwaggerGen;
 global using Swashbuckle.AspNetCore.Annotations;
 global using FluentValidation;
 global using CommonService;
-global using CommonService.Infrastructure;
 global using ContactService.Models;
 global using ContactService.Services;
 global using ContactService.Infrastructure;

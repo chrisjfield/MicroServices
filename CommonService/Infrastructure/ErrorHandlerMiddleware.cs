@@ -30,6 +30,7 @@ namespace CommonService.Infrastructure
                 response.StatusCode = error switch
                 {
                     AppException => (int)HttpStatusCode.BadRequest,// custom application error
+                    UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized, //unauth error
                     KeyNotFoundException => (int)HttpStatusCode.NotFound,// not found error
                     _ => (int)HttpStatusCode.InternalServerError,// unhandled error
                 };
