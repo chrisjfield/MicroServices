@@ -1,0 +1,12 @@
+global using Microsoft.Extensions.Logging.Abstractions;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Text.Json;
+global using System.IO;
+global using System.Collections.Generic;
+global using System.Threading.Tasks;
+global using Contact.Infrastructure.Services;
+global using Contact.Infrastructure;
+global using Contact.Domain;
