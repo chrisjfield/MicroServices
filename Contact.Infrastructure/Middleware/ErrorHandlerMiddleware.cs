@@ -23,7 +23,8 @@ public class ErrorHandlerMiddleware
         }
         catch (Exception error)
         {
-            _logger.LogError("An Error Occured", error);
+            _logger.LogError(error, "An error occured for {url}", context.Request.Path);
+
             HttpResponse response = context.Response;
             response.ContentType = "application/json";
 

@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
-builder.AddServices();
-builder.OpenTelemetryInstrumenter();
+builder
+    .AddServices()
+    .AddLogger()
+    .AddOpenTelemetryInstrumenter();
 
 var app = builder.Build();
 app.UseHttpsRedirection();

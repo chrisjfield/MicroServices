@@ -7,7 +7,7 @@ public static class ServiceBuilder
 {
     private readonly static string AllowAllCorsPolicy = "AllowAll";
 
-    public static void AddServices(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
     {
         builder.AddDatabase();
         builder.AddDataSerivces();
@@ -15,6 +15,8 @@ public static class ServiceBuilder
         builder.AddSwagger();
         builder.AddRateLimiting();
         builder.AddCorsPolicies();
+
+        return builder;
     }
 
     private static readonly OpenApiSecurityScheme clientId = new()
