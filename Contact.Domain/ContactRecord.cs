@@ -27,6 +27,6 @@ public class ContactRecordValidator : AbstractValidator<ContactRecord>
     {
         RuleFor(c => c.Name).NotEmpty();
         RuleFor(c => c.DateOfBirth).LessThan(DateTime.Today).WithMessage("Date of birth must be in the past");
-        RuleFor(c => c.Gender).Must(g => genders.Contains(g)).When(c => c.Gender != null).WithMessage("Please only use: " + string.Join(",", genders));
+        RuleFor(c => c.Gender).Must(g => genders.Contains(g!)).When(c => c.Gender != null).WithMessage("Please only use: " + string.Join(",", genders));
     }
 }
