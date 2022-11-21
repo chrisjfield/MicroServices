@@ -9,3 +9,4 @@ global using Contact.Infrastructure.Middleware;
 global using Microsoft.Extensions.Logging;
 global using System.Threading.RateLimiting;
 global using Microsoft.AspNetCore.RateLimiting;
+global using Contact.Infrastructure.Interfaces;

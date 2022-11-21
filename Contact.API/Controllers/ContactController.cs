@@ -18,7 +18,7 @@ public static class ContactController
             .AddEndpointFilter<ValidationFilter<ContactRecord>>()
             .DocumentPostRequest<ContactRecord>("PostContact", "Creates a contact");
 
-        group.MapPut("/", PutContact)
+        group.MapPut("/{id}", PutContact)
             .AddEndpointFilter<ValidationFilter<ContactRecord>>()
             .DocumentPutRequest<ContactRecord>("PutContact", "Updates a contact");
 
@@ -29,17 +29,22 @@ public static class ContactController
     }
 
     internal static async Task<IResult> GetAllContacts(ContactDataService contactDataService) =>
-        Results.Ok(await contactDataService.GetAllContacts());
+        Results.Ok(await contactDataService.GetAll());
 
-    internal static async Task<IResult> GetContact(ContactDataService contactDataService, int id) => 
-        Results.Ok(await contactDataService.GetContact(id));
+    internal static async Task<IResult> GetContact(ContactDataService contactDataService, int id) =>
+        Results.Ok(await contactDataService.Get(id));
 
-    internal static async Task<IResult> PostContact(ContactDataService contactDataService, IValidator<ContactRecord> validator, ContactRecord contact) => 
-        await contactDataService.PostContact(contact);
+    internal static async Task<IResult> PostContact(ContactDataService contactDataService, IValidator<ContactRecord> validator, ContactRecord contact) {
+        ContactRecord result = await contactDataService.Create(contact);
+        return Results.Created($"/contact/{result.Id}", result);
+    }
 
-    internal static async Task<IResult> PutContact(ContactDataService contactDataService, IValidator<ContactRecord> validator, ContactRecord contact, int id) => 
-        await contactDataService.PutContact(contact);
+    internal static async Task<IResult> PutContact(ContactDataService contactDataService, IValidator<ContactRecord> validator, ContactRecord contact, int id) =>
+        Results.Ok(await contactDataService.Update(contact));
 
-    internal static async Task<IResult> DeleteContact(ContactDataService contactDataService, int id) => 
-        await contactDataService.DeleteContact(id);
+    internal static async Task<IResult> DeleteContact(ContactDataService contactDataService, int id)
+    {
+        await contactDataService.Delete(id);
+        return Results.NoContent();
+    }
 }
