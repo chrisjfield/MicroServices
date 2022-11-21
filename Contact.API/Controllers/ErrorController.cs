@@ -1,4 +1,6 @@
-﻿namespace Contact.API.Controllers;
+﻿using Contact.Infrastructure.Extensions;
+
+namespace Contact.API.Controllers;
 
 public static class ErrorController
 {

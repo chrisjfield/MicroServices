@@ -26,7 +26,7 @@ public static class ApplicationBuilder
                     partitionKey: clientId.ToString(),
                     factory: partition => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 1,
+                        PermitLimit = 10,
                         QueueLimit = 0,
                         Window = TimeSpan.FromMinutes(1),
                         AutoReplenishment = true,

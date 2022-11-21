@@ -1,3 +1,3 @@
 ﻿namespace Contact.Domain;
 
-public record ValidationErrors(List<string> Errors);
+public record ValidationErrors(List<string> Validation);
