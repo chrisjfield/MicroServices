@@ -12,6 +12,7 @@ public static class ServiceBuilder
         builder.AddValidation();
         builder.AddSwagger();
         builder.AddCorsPolicies();
+        builder.AddRateLimitingPolicies();
         builder.AddLogger();
         builder.AddOpenTelemetryInstrumenter();
 
@@ -63,6 +64,30 @@ public static class ServiceBuilder
         builder.Services.AddValidatorsFromAssemblyContaining<ContactRecord>();
     }
 
+    private static void AddRateLimitingPolicies(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+            {
+                httpContext.Request.Headers.TryGetValue(ApiKeyHeader, out var clientId);
+
+                return RateLimitPartition.GetSlidingWindowLimiter(
+                    partitionKey: clientId.ToString(),
+                    factory: partition => new SlidingWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
+                        Window = TimeSpan.FromMinutes(1),
+                        SegmentsPerWindow = 10,
+                        QueueLimit = 0,
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                    }
+                );
+            });
+        });
+    }
+
     private static void AddCorsPolicies(this WebApplicationBuilder builder)
     {
         builder.Services.AddCors(options =>
@@ -73,8 +98,7 @@ public static class ServiceBuilder
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
-            }
-            );
+            });
         });
     }
 }

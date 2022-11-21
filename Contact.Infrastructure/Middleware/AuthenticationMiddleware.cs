@@ -19,7 +19,6 @@ public class AuthenticationMiddleware
             throw new UnauthorizedAccessException("Client Id was not provided");
         }
 
-
         await _next(context);
     }
 }
