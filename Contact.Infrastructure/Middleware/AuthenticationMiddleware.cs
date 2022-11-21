@@ -3,7 +3,6 @@
 public class AuthenticationMiddleware
 {
     private readonly RequestDelegate _next;
-    private const string APIKEY = "X-ClientId";
     private readonly ILogger<AuthenticationMiddleware> _logger;
 
     public AuthenticationMiddleware(RequestDelegate next, ILoggerFactory _loggerFactory)
@@ -14,7 +13,7 @@ public class AuthenticationMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        if (!context.Request.Headers.TryGetValue(APIKEY, out var extractedApiKey))
+        if (!context.Request.Headers.TryGetValue(ServiceBuilder.ApiKeyHeader, out var extractedApiKey))
         {
             _logger.LogInformation("No Api Key provided");
             throw new UnauthorizedAccessException("Client Id was not provided");

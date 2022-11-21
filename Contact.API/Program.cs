@@ -1,15 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
-builder
+
+var app = builder
     .AddServices()
-    .AddLogger()
-    .AddOpenTelemetryInstrumenter();
-
-var app = builder.Build();
-app.UseHttpsRedirection();
-app.AddDocumentation();
-app.RegisterMiddleware();
-app.UseHttpLogging();
-app.UseRateLimiting();
-app.AddEndpoints();
-
-app.Run();
+    .Build();
+    
+app.ConfigureApp()
+   .AddEndpoints()
+   .Run();

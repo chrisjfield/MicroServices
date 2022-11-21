@@ -1,4 +1,5 @@
 ﻿using Contact.Infrastructure.Services;
+using Contact.Infrastructure.Telemetry;
 using Microsoft.OpenApi.Models;
 
 namespace Contact.Infrastructure;
@@ -6,6 +7,7 @@ namespace Contact.Infrastructure;
 public static class ServiceBuilder
 {
     private readonly static string AllowAllCorsPolicy = "AllowAll";
+    public readonly static string ApiKeyHeader = "X-ClientId";
 
     public static WebApplicationBuilder AddServices(this WebApplicationBuilder builder)
     {
@@ -13,8 +15,9 @@ public static class ServiceBuilder
         builder.AddDataSerivces();
         builder.AddValidation();
         builder.AddSwagger();
-        builder.AddRateLimiting();
         builder.AddCorsPolicies();
+        builder.AddLogger();
+        builder.AddOpenTelemetryInstrumenter();
 
         return builder;
     }
@@ -23,13 +26,13 @@ public static class ServiceBuilder
     {
         Description = "ClientId must be specified",
         Type = SecuritySchemeType.ApiKey,
-        Name = "X-ClientId",
+        Name = ApiKeyHeader,
         In = ParameterLocation.Header,
         Scheme = "ApiKeyScheme",
         Reference = new OpenApiReference
         {
             Type = ReferenceType.SecurityScheme,
-            Id = "X-ClientId"
+            Id = ApiKeyHeader
         }
     };
 
@@ -50,7 +53,7 @@ public static class ServiceBuilder
         builder.Services.AddSwaggerGen((options) =>
         {
             options.EnableAnnotations();
-            options.AddSecurityDefinition("X-ClientId", clientId);
+            options.AddSecurityDefinition(ApiKeyHeader, clientId);
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 { clientId, new List<string>() }
@@ -62,14 +65,6 @@ public static class ServiceBuilder
     {
 
         builder.Services.AddValidatorsFromAssemblyContaining<ContactRecord>();
-    }
-
-    private static void AddRateLimiting(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddMemoryCache();
-        builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-        builder.Services.AddInMemoryRateLimiting();
-        builder.Services.Configure<ClientRateLimitOptions>(builder.Configuration.GetSection("ClientRateLimiting"));
     }
 
     private static void AddCorsPolicies(this WebApplicationBuilder builder)
