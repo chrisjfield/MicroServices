@@ -6,9 +6,9 @@ public interface IContactDataService
 
     Task<ContactRecord> Get(int id);
 
-    Task<ContactRecord> Create(ContactRecord contact);
+    Task<ContactRecord> Create(ContactBaseRecord contact);
 
-    Task<ContactRecord> Update(ContactRecord updateContact);
+    Task<ContactRecord> Update(ContactBaseRecord updateContact, int id);
 
     Task Delete(int id);
 }

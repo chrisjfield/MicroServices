@@ -25,29 +25,37 @@ public class ContactDataService : IContactDataService
         return contact;
     }
 
-    public async Task<ContactRecord> Create(ContactRecord contact)
+    public async Task<ContactRecord> Create(ContactBaseRecord contact)
     {
         logger.LogInformation("Contact posted: {contact}", contact);
 
-        await contactDb.Contacts.AddAsync(contact);
+        var nextId = contactDb.Contacts.DefaultIfEmpty().Max(c => c == null ? 1 : c.Id + 1);
+
+        var (name, gender, dateOfBirth) = contact;
+        ContactRecord contactToPost = new(nextId, name, gender, dateOfBirth);
+
+        await contactDb.Contacts.AddAsync(contactToPost);
         int res = await contactDb.SaveChangesAsync();
 
         if (res != 1) throw new Exception();
 
-        return contact;
+        return contactToPost;
     }
 
-    public async Task<ContactRecord> Update(ContactRecord updateContact)
+    public async Task<ContactRecord> Update(ContactBaseRecord updateContact, int id)
     {
-        ContactRecord? contact = await contactDb.Contacts.AsNoTracking().FirstOrDefaultAsync((c) => c.Id == updateContact.Id);
-        if (contact is null) throw new KeyNotFoundException($"A record with the id: {updateContact.Id} was not found");
+        ContactRecord? contact = await contactDb.Contacts.AsNoTracking().FirstOrDefaultAsync((c) => c.Id == id);
+        if (contact is null) throw new KeyNotFoundException($"A record with the id: {id} was not found");
 
-        contactDb.Contacts.Update(updateContact);
+        var (name, gender, dateOfBirth) = updateContact;
+        ContactRecord contactToUpdate = contact with { Name = name, Gender = gender, DateOfBirth = dateOfBirth };
+
+        contactDb.Contacts.Update(contactToUpdate);
         int res = await contactDb.SaveChangesAsync();
 
         if (res != 1) { throw new Exception(); }
 
-        return updateContact;
+        return contactToUpdate;
     }
 
     public async Task Delete(int id)

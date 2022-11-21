@@ -12,6 +12,7 @@ public class SwaggerExample : ISchemaFilter
         return type.Name switch
         {
             nameof(ContactRecord) => ContactRecordExample.Example,
+            nameof(ContactBaseRecord) => ContactBaseRecordExample.Example,
             _ => null,
         };
     }

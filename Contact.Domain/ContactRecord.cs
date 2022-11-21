@@ -6,7 +6,7 @@ public record ContactRecord(
     string Name,
     string? Gender = null,
     DateTime? DateOfBirth = null
-);
+) : ContactBaseRecord(Name, Gender, DateOfBirth);
 
 public static class ContactRecordExample
 {
@@ -17,16 +17,4 @@ public static class ContactRecordExample
         ["Gender"] = new OpenApiString("Male"),
         ["DateOfBirth"] = new OpenApiDate(new DateTime(1992, 11, 21))
     };
-}
-
-public class ContactRecordValidator : AbstractValidator<ContactRecord>
-{
-    readonly List<string> genders = new() { "Female", "Male", "Other" };
-
-    public ContactRecordValidator()
-    {
-        RuleFor(c => c.Name).NotEmpty();
-        RuleFor(c => c.DateOfBirth).LessThan(DateTime.Today).WithMessage("Date of birth must be in the past");
-        RuleFor(c => c.Gender).Must(g => genders.Contains(g!)).When(c => c.Gender != null).WithMessage("Please only use: " + string.Join(",", genders));
-    }
 }
