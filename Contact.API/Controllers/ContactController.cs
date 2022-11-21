@@ -24,21 +24,21 @@ public static class ContactController
         return group;
     }
 
-    internal static async Task<IResult> GetAllContacts(ContactDataService contactDataService) =>
+    public static async Task<IResult> GetAllContacts(ContactDataService contactDataService) =>
         Results.Ok(await contactDataService.GetAll());
 
-    internal static async Task<IResult> GetContact(ContactDataService contactDataService, int id) =>
+    public static async Task<IResult> GetContact(ContactDataService contactDataService, int id) =>
         Results.Ok(await contactDataService.Get(id));
 
-    internal static async Task<IResult> PostContact(ContactDataService contactDataService, IValidator<ContactBaseRecord> validator, ContactBaseRecord contact) {
+    public static async Task<IResult> PostContact(ContactDataService contactDataService, IValidator<ContactBaseRecord> validator, ContactBaseRecord contact) {
         ContactRecord result = await contactDataService.Create(contact);
         return Results.Created($"/contact/{result.Id}", result);
     }
 
-    internal static async Task<IResult> PutContact(ContactDataService contactDataService, IValidator<ContactBaseRecord> validator, ContactBaseRecord contact, int id) =>
+    public static async Task<IResult> PutContact(ContactDataService contactDataService, IValidator<ContactBaseRecord> validator, ContactBaseRecord contact, int id) =>
         Results.Ok(await contactDataService.Update(contact, id));
 
-    internal static async Task<IResult> DeleteContact(ContactDataService contactDataService, int id)
+    public static async Task<IResult> DeleteContact(ContactDataService contactDataService, int id)
     {
         await contactDataService.Delete(id);
         return Results.NoContent();

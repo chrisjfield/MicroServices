@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Contact.API\Contact.API.csproj" />
     <ProjectReference Include="..\Contact.Infrastructure\Contact.Infrastructure.csproj" />
   </ItemGroup>
 
