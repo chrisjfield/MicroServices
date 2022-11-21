@@ -1,8 +1,4 @@
-﻿using Contact.Infrastructure.Services;
-using Contact.Infrastructure.Telemetry;
-using Microsoft.OpenApi.Models;
-
-namespace Contact.Infrastructure;
+﻿namespace Contact.Infrastructure;
 
 public static class ServiceBuilder
 {

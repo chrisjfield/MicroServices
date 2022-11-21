@@ -1,8 +1,4 @@
-﻿using Contact.Infrastructure.Extensions;
-using Contact.Infrastructure.Filters;
-using FluentValidation;
-
-namespace Contact.API.Controllers;
+﻿namespace Contact.API.Controllers;
 
 public static class ContactController
 {

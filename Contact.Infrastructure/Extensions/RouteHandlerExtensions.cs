@@ -1,6 +1,4 @@
-﻿using Swashbuckle.AspNetCore.Annotations;
-
-namespace Contact.Infrastructure.Extensions;
+﻿namespace Contact.Infrastructure.Extensions;
 
 public static class RouteHandlerExtensions
 {

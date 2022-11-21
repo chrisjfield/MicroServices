@@ -1,6 +1,4 @@
-﻿using FluentValidation.Results;
-
-namespace Contact.Infrastructure.Extensions;
+﻿namespace Contact.Infrastructure.Extensions;
 
 public static class ValidationErrorExtensions
 {

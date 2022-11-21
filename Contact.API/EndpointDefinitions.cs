@@ -1,6 +1,4 @@
-﻿using Contact.API.Controllers;
-
-namespace Contact.API;
+﻿namespace Contact.API;
 
 public static class EndpointDefinitions
 {

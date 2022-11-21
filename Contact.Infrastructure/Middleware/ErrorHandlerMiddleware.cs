@@ -1,7 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
-
-namespace Contact.Infrastructure.Middleware;
+﻿namespace Contact.Infrastructure.Middleware;
 
 public class ErrorHandlerMiddleware
 {
