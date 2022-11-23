@@ -10,6 +10,7 @@ public static class ServiceBuilder
         builder.AddDatabase();
         builder.AddDataSerivces();
         builder.AddValidation();
+        builder.AddVersioning();
         builder.AddSwagger();
         builder.AddCorsPolicies();
         builder.AddRateLimitingPolicies();
@@ -43,10 +44,24 @@ public static class ServiceBuilder
         builder.Services.AddScoped<ContactDataService>();
     }
 
+    private static void AddVersioning(this WebApplicationBuilder builder)
+    {
+        // see https://github.com/dotnet/aspnet-api-versioning/wiki for example code
+        builder.Services.AddApiVersioning(options =>
+        {
+            options.ReportApiVersions = true;
+        }).AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
+        });
+    }
+
     private static void AddSwagger(this WebApplicationBuilder builder)
     {
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         builder.Services.AddSwaggerGen((options) =>
         {
             options.EnableAnnotations();
@@ -55,6 +70,7 @@ public static class ServiceBuilder
             {
                 { clientId, new List<string>() }
             });
+            options.OperationFilter<SwaggerDefaultValues>();
         });
     }
 

@@ -58,6 +58,26 @@ public class ContactDataService : IContactDataService
         return contactToUpdate;
     }
 
+    public async Task<ContactRecord> Patch(ContactBaseRecord updateContact, int id)
+    {
+        ContactRecord? contact = await contactDb.Contacts.AsNoTracking().FirstOrDefaultAsync((c) => c.Id == id);
+        if (contact is null) throw new KeyNotFoundException($"A record with the id: {id} was not found");
+
+        var (name, gender, dateOfBirth) = updateContact;
+        ContactRecord contactToUpdate = contact with { 
+            Name = name ?? contact.Name, 
+            Gender = gender ?? contact.Gender, 
+            DateOfBirth = dateOfBirth ?? contact.DateOfBirth,
+        };
+
+        contactDb.Contacts.Update(contactToUpdate);
+        int res = await contactDb.SaveChangesAsync();
+
+        if (res != 1) { throw new Exception(); }
+
+        return contactToUpdate;
+    }
+
     public async Task Delete(int id)
     {
         ContactRecord? contact = await contactDb.Contacts.FindAsync(id);

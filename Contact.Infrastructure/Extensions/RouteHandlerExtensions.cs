@@ -18,7 +18,7 @@ public static class RouteHandlerExtensions
            .Produces<ValidationErrors>(StatusCodes.Status400BadRequest);
     }
 
-    public static void DocumentPutRequest<T>(this RouteHandlerBuilder builder, string name, string description)
+    public static void DocumentUpdateRequest<T>(this RouteHandlerBuilder builder, string name, string description)
     {
         builder
            .DocumentBaseRequest(name, description)

@@ -4,6 +4,8 @@ var app = builder
     .AddServices()
     .Build();
 
+var versionSet = app.ApiVersionSet();
+
 app.ConfigureApp()
-   .AddEndpoints()
+   .AddEndpoints(versionSet)
    .Run();
